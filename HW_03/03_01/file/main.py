@@ -1,28 +1,9 @@
-"""
-Відсортувати файли в папці.
-"""
-
 import argparse
 import sys
-from multiprocessing import Pool, cpu_count
 from pathlib import Path
 from shutil import copyfile
-from threading import Thread
 import logging
-
-"""
---source [-s] 
---output [-o] default folder = dist
-"""
-
-parser = argparse.ArgumentParser(description="Sorting folder")
-parser.add_argument("--source", "-s", help="Source folder", required=True)
-parser.add_argument("--output", "-o", help="Output folder", default="dist")
-
-args = vars(parser.parse_args())
-source = Path(args.get("source"))
-output = Path(args.get("output"))
-
+import threading
 
 def grabs_folder(path: Path) -> list[Path]:
     folders = []
@@ -33,7 +14,6 @@ def grabs_folder(path: Path) -> list[Path]:
             if len(inner_dir):
                 folders = folders + inner_dir
     return folders
-
 
 def copy_file(path: Path) -> None:
     for el in path.iterdir():
@@ -47,14 +27,29 @@ def copy_file(path: Path) -> None:
                 logging.error(err)
                 sys.exit(1)
 
+def copy_files_in_threads(folders):
+    threads = []
+    for folder in folders:
+        thread = threading.Thread(target=copy_file, args=(folder,))
+        threads.append(thread)
+        thread.start()
+
+    for thread in threads:
+        thread.join()
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Sorting folder")
+    parser.add_argument("--source", "-s", help="Source folder", required=True)
+    parser.add_argument("--output", "-o", help="Output folder", default="dist")
+    args = vars(parser.parse_args())
+    source = Path(args.get("source"))
+    output = Path(args.get("output"))
+
     logging.basicConfig(level=logging.INFO, format="%(threadName)s %(message)s")
 
-    folders = [source, *grabs_folder(source)]  
-    with Pool(cpu_count()) as pool:
-        pool.map(copy_file, folders)
-        pool.close()
-        pool.join()
+    folders = [source, *grabs_folder(source)]
+    copy_files_in_threads(folders)
 
-    print(f"Можна видалять {source}")
+    print(f"Можна видаляти {source}")
+
+
