@@ -1,5 +1,6 @@
 import time
 import multiprocessing
+import concurrent.futures
 
 def factorize(n):
     factors_list = []
@@ -9,7 +10,7 @@ def factorize(n):
     return factors_list
 
 if __name__ == "__main__":
-    numbers = [128, 255, 99999, 10651060]
+    numbers = [128, 255, 99999, 10651060, 128, 255, 99999, 10651060]
 
     # Measure the time for synchronous execution
     start_time = time.time()
@@ -25,3 +26,10 @@ if __name__ == "__main__":
     pool.close()
     pool.join()
     print(f"Parallel execution time: {end_time_2 - start_time_2} seconds")
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=len(numbers)) as executor:
+        start_time_3 = time.time()
+        result_3 = list(executor.map(factorize, numbers))
+        end_time_3 = time.time()
+    
+    print(f"Parallel execution time using a context manager: {end_time_3 - start_time_3} seconds")
