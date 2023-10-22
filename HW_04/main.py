@@ -117,9 +117,9 @@ def run_http_server(host, port):
         
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, format='%(threadName)s %(message)s')
-
+# Запускаю в потоках сервер 1
     server = Thread(target=run_http_server, args=(HTTP_HOST, HTTP_PORT))
     server.start()
-
+# Запускаю в потоках сервер 2
     server_socket = Thread(target=run_socket_server, args=(SOCKET_HOST, SOCKET_PORT))
     server_socket.start()
