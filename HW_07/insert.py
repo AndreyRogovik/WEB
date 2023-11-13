@@ -45,13 +45,7 @@ class Grade(Base):
     subject_id = Column(Integer, ForeignKey('subjects.id'))
     grade = Column(Integer)
     grade_date = Column(Date)
-
-    # Встановіть параметр overlaps для відношення student_relationship
     student_relationship = relationship(Student, overlaps="grades,student")
-
-
-    # Опціонально ви можете встановити каскадне видалення для оцінок, пов'язаних із студентами
-    # student = relationship(Student, backref='grades', cascade='all, delete-orphan')
 
    
 
@@ -104,5 +98,4 @@ for st_id in range(1, STUDENT_NUMBER + 1):
         )
         session.add(grade)
 session.commit()
-        
-        
+

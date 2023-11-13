@@ -10,6 +10,7 @@ python = "^3.10"
 sqlalchemy = "^2.0.23"
 psycopg2 = "^2.9.9"
 faker = "^19.13.0"
+alembic = "^1.12.1"
 
 
 [build-system]
