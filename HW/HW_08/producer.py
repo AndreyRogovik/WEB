@@ -11,7 +11,6 @@ connect('contacts', host=uri)
 fake = Faker()
 
 
-
 # Підключення до RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
