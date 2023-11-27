@@ -1,7 +1,7 @@
 import json
 import pika
 from time import sleep
-from mongoengine import connect, Document, StringField, BooleanField
+from mongoengine import connect
 from connect import uri 
 from models import Contact
 # Підключення до MongoDB
