@@ -3,14 +3,9 @@ import pika
 from time import sleep
 from mongoengine import connect, Document, StringField, BooleanField
 from connect import uri 
-
+from models import Contact
 # Підключення до MongoDB
 connect('contacts', host=uri)
-
-class Contact(Document):
-    fullname = StringField(required=True)
-    email = StringField(required=True)
-    is_sent = BooleanField(default=False)
 
 # Підключення до RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
