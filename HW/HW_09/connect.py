@@ -3,7 +3,7 @@ from pymongo.server_api import ServerApi
 
 
 # connect to cluster on AtlasDB with connection string
-uri = "mongodb+srv://userweb16:567234@rohovykdb.1rhrsch.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://userweb16:******@rohovykdb.1rhrsch.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
