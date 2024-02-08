@@ -12,10 +12,10 @@ with open('quotes.json', 'r', encoding='utf-8') as fd:
 
 
 for quote in quotes:
-    author = db.authors.find_one({'fullname': quote['author']})
+    author = db.authors.find_one({'fullname': quote['authors']})
     if author:
         db.quotes.insert_one({
             'quote': quote['quote'],
             'tags': quote['tags'],
-            'author': ObjectId(author['_id'])
+            'authors': ObjectId(author['_id'])
         })

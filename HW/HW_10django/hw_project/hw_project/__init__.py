@@ -1,0 +1,2 @@
+def quotes():
+    return None

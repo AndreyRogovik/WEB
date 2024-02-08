@@ -1,14 +1,14 @@
 import os
 import django
-
+from django.db import models
 from pymongo import MongoClient
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hw_project.settings")
 django.setup()
+# Create your models here.
+from quotes.models import Author, Tag, Quote  # noqa
 
-from quotes.models import Quote, Tag, Author  # noqa
-
-client = MongoClient("mongodb://localhost")
+client = MongoClient("mongodb://localhost:10")
 
 db = client.hw
 
@@ -33,7 +33,7 @@ for quote in quotes:
     exist_quote = bool(len(Quote.objects.filter(quote=quote['quote'])))
 
     if not exist_quote:
-        author = db.authors.find_one({'_id': quote['author']})
+        author = db.authors.find_one({'_id': quote['authors']})
         a = Author.objects.get(fullname=author['fullname'])
         q = Quote.objects.create(
             quote=quote['quote'],
