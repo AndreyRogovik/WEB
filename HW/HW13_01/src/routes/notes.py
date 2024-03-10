@@ -8,11 +8,14 @@ from src.database.models import User
 from src.schemas import NoteModel, NoteUpdate, NoteStatusUpdate, NoteResponse
 from src.repository import notes as repository_notes
 from src.services.auth import auth_service
+from fastapi_limiter.depends import RateLimiter
+
 
 router = APIRouter(prefix='/notes', tags=["notes"])
 
 
-@router.get("/", response_model=List[NoteResponse])
+@router.get("/", response_model=List[NoteResponse], description='No more than 10 requests per minute',
+            dependencies=[Depends(RateLimiter(times=10, seconds=60))])
 async def read_notes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db),
                      current_user: User = Depends(auth_service.get_current_user)):
     notes = await repository_notes.get_notes(skip, limit, current_user, db)

@@ -3,15 +3,16 @@ from pathlib import Path
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from fastapi_mail.errors import ConnectionErrors
 from pydantic import EmailStr
-
+from src import settings
 from src.services.auth import auth_service
 
+
 conf = ConnectionConfig(
-    MAIL_USERNAME="***",
-    MAIL_PASSWORD="***",
-    MAIL_FROM="***",
-    MAIL_PORT=465,
-    MAIL_SERVER="smtp.meta.ua",
+    MAIL_USERNAME=settings.MAIL_USERNAME,
+    MAIL_PASSWORD=settings.MAIL_PASSWORD,
+    MAIL_FROM=settings.MAIL_FROM,
+    MAIL_PORT=settings.MAIL_PORT,
+    MAIL_SERVER=settings.MAIL_SERVER,
     MAIL_FROM_NAME="Example email",
     MAIL_STARTTLS=False,
     MAIL_SSL_TLS=True,
