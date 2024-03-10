@@ -1,2 +1,0 @@
-def quotes():
-    return None
