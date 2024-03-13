@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hw11"
+version = "0.1.0"
+description = ""
+authors = ["AndriiRohovyk <77483613+AndreyRogovik@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.109.2"
+uvicorn = {extras = ["standard"], version = "^0.27.1"}
+sqlalchemy = "^2.0.27"
+psycopg2 = "^2.9.9"
+alembic = "^1.13.1"
+fastapi-mail = "^1.4.1"
+starlette = ">=0.36.3,<0.37.0"
+fastapi-limiter = "^0.1.6"
+aioredis = "^2.0.1"
+cloudinary = "^1.39.0"
+
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.2.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
